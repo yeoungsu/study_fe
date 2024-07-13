@@ -269,14 +269,246 @@ console.log(
 // 우선순위
 // 남자이고, 이름이 mike 이거나 성인이면 통과 // &&가 ||보다 높음
 
-const gender = 'f';
-const name = 'jane';
-const isAdult = true;
+// const gender = 'f';
+// const name = 'jane';
+// const isAdult = true;
 
-//if(gender === 'm' && name === 'mike' || isAdult){ // 해당 코드와 아래 코드는 동일
-if((gender === 'm' && name === 'mike') || isAdult){
-// if(gender === 'm' && (name === 'mike' || isAdult)){ // 의도한 바로 만들려면 해당 코드처럼 묶어줘야함
-    console.log('통과')
-} else {
-    console.log("돌아가..")
+// //if(gender === 'm' && name === 'mike' || isAdult){ // 해당 코드와 아래 코드는 동일
+// if((gender === 'm' && name === 'mike') || isAdult){
+// // if(gender === 'm' && (name === 'mike' || isAdult)){ // 의도한 바로 만들려면 해당 코드처럼 묶어줘야함
+//     console.log('통과')
+// } else {
+//     console.log("돌아가..")
+// }
+
+// 7월 12일 - 비교 연산자 까지 공부 *********************************************************************************
+
+// 반복문 -> 동일한 작업을 여러번 반복
+// 1부터 10까지 로그를 찍어주세요.
+// for
+// for (let i = 0; i <= 10; i++){
+//     console.log(i);
+// };
+//조건을 확인해서 false 이면 반복문을 빠져나옴
+
+//while
+// let i = 0;
+
+// while(i<10){
+//     console.log(i);
+//     i++;
+// };
+
+// do..while // while반복문과의 차이는 적어도 한번은 실행 함
+// let i = 0;
+// do{
+//     i++;
+// }while(i < 10)
+
+// 반복문을 빠져나오는 방법
+
+// break -> 멈추고 빠져나옴
+// while(true) { // while(true)는 무한반복 되기 때문에 조심해서 사용
+//     let answer = confirm("계속할까요?");
+//     if(!answer){ // brake를 만나려면 !answer가 false가 되어야함
+//         break;
+//     }
+// };
+
+// continue -> 멈추고 다음 반복으로 진행
+// 예시 // 짝수만
+for(let i = 0; i < 10; i++){
+    if(i%2){ // 처음에 i가 0이기 때문에 continue문을 만나지 못하고 console을 찍음 
+        // 그 후에 i가 1로 증가되고 2로 나누지 못하기 때문에 continue문을 만나게 돼서 log를 찍지않고 반복함
+        continue;
+    }
+    console.log(i)
+};
+
+// 명확한 횟수가 정해져있으면 for문을 그러지 않는다면 while을 사용하는 것이 좋음
+// 반복문은 코드를 줄이기 위한 좋은 코드임
+
+// switch -> if else를 알고 있다면 알 필요 없음 그 이유는 모든 switch문은 if else로 작성할 수 있기 때문
+// 그런데 쓰는 이유는 케이스가 다양 할 경우 보다 간결하게 쓸 수 있는 장점이 있음
+
+// swith(평가){
+//      case A :
+//      // A일때 코드
+//      case B :
+//      // B일때 코드
+//      ...
+// }
+
+// 이걸 if else문으로 작성하면은
+// if(평가 == A){
+//      // A일때 코드
+//} else if(평가 == B){}
+//      // B일때 코드
+//}
+
+// 사과 : 100원
+// 바나나 : 200원
+// 키위 : 300원
+// 멜론 : 500원
+// 수박 : 500원
+// 사고싶은 과일을 물어보고 가격 알려주기
+
+// let fruit = prompt("무슨 과일을 사고 싶나요?");
+
+// switch(fruit){
+//     case '사과' :
+//         console.log('100원 입니다.');
+//         break;
+//     case '바나나' :
+//         console.log('200원 입니다.');
+//         break;
+//     case '키위' :
+//         console.log('300원 입니다.');
+//         break;
+//     case '멜론' :
+//     case '수박' :
+//         console.log('500원 입니다.');
+//         break;
+//     // case '수박' :
+//     //     console.log('500원 입니다.');
+//     //     break;
+//     default :
+//         console.log('그런 과일은 없습니다.')
+// };
+
+// 함수 (function) -> 팝업을 띄우거나 결제를 하는 둥 해당 코드를 여러군데에 사용할 때 편리하게 하는 것?
+// console, alert, confirm
+// 함수 작성법
+// 함수 함수이름 (매개변수 // 매개변수가 여러개면 쉼표로 구분할 수 있음) {}
+// function sayHello(name){
+//     console.log(`Hello, ${name}`);
+// }
+
+// 매개변수 없고 error 메세지를 보여주는 함수
+function showError() {
+    alert('에러가 발생했습니다. 다시 시도해주세요.');
+};
+// showError();
+
+// 어려운? 기능을 다양한 곳에 사용하기 용이함 // 유지보수가 편함
+
+// 매개변수가 있는 함수
+// function sayHello(name) {
+//     const msg = `Hello, ${name}`;
+//     console.log(msg);
+// };
+// sayHello('mike');
+// sayHello('tom');
+// sayHello('jane');
+
+// 만약 사용자의 이름을 모를 때
+// function sayHello(name) {
+//     console.log(name) // 매개변수가 없을 때 name은 undefined로 찍히기 때문에 log가 Hello로만 찍힘
+//     let msg = `Hello`;
+//     if(name) {
+//         msg = `Hello, ${name}`;
+//     }
+//     console.log(msg);
+// };
+// sayHello();
+// sayHello('mike');
+// function sayHello(name) {
+//     let msg = `Hello`;
+//     if(name) {
+//         // msg += ', ' + name; 
+//         msg += `, ${name}`; // 2가지로 식을 쓸 수 있음
+//         // msg에 name을 더해서 다시 msg로 넣어줌 ex) name = mike 로 매개변수가 들어가면 msg + name으로
+//         // Hello mike로 msg에 적용됨
+//     }
+//     console.log(msg);
+// };
+// sayHello();
+// sayHello('mike');
+
+// 함수 내부에서 사용하는 변수를 지역변수라고 함 // 함수 안에서만 사용할 수 있음
+// console.log(msg); // 찾을 수 없다고 뜸 // 해당 변수를 사용하려면 함수 바깥으로 빼줘야함
+
+// let msg = 'Hello'; // 이렇게 어디서나 접근 할 수 있는 변수를 전역 변수라고 한다 (global varable)
+// console.log('함수 호출 전');
+// console.log(msg);
+
+// function sayHello(name){
+//     if(name){
+//         msg += `, ${name}`;
+//     }
+//     console.log('함수 내부');
+//     // 함수 내부에서만 접근할 수 있는 변수를 지역변수라고 함 (local varable)
+//     console.log(msg);
+// }
+// // 함수 내부에서 나온 값은 처음 let msg 에 저장이 되기 때문에 함수 호출 후에도 Hello, mike 라고 결과값이 나옴
+// sayHello('mike');
+// console.log('함수 호출 후');
+// console.log(msg)
+
+// 전역 변수와 지역 변수
+
+// let msg = 'welcome'; // 전역 변수
+// console.log(msg);
+
+// function sayHello (name) {
+//     let msg = 'Hello' // 지역 변수
+//     console.log(msg + ' ' + name);
+// }
+// // 함수 내부에서 let으로 전역 변수와 동일하게 설정할 수 있고 서로 간섭을 하지 않는다는 것을 알 수 있음
+// sayHello('mike');
+// console.log(msg);
+
+// let name = 'mike';
+
+// function sayHello(name) {
+//     console.log(name)
+// }
+// // 매개 변수로 받은 값은 복사된 후 함수의 지역 변수가 됨 전체 서비스에서 공통으로 바라봐야하는 변수를 제외하고는 지역변수를
+// // 쓰는 습관을 들이는 것이 좋음 전역 변수가 많아지면 관리가 힘들어지기 때문
+// // 함수에 특화된 지역 변수를 가급적 사용하는 것이 좋음
+// sayHello();
+// sayHello('jane');
+
+// OR
+// function sayHello(name) {
+//     let newName = name || 'friend';
+//     let msg = `Hello, ${newName}`
+//     console.log(msg)
+// }
+
+// sayHello();
+// sayHello('jane');
+
+// default value // 매개 변수에 기본 값 설정
+// function sayHello(name = 'friend') {
+//     let msg = `Hello, ${name}`
+//     console.log(msg)
+// }
+
+// sayHello();
+// sayHello('jane');
+
+// return 으로 값 변환
+// function add(num1, num2){
+//     return num1 + num2; // return을 적어주면 오른쪽에 있는 값을 반환해줌
+// }
+
+// const result = add(2,3); // 3을 result에 반환
+// console.log(result);
+
+function showError(){
+    alert('에러가 발생했습니다.');
+    return; // return만 있어도 undefined를 반환 // return문이 있으면 그 즉시 오른쪽에 있는 값을 반환하고 종료함
+    // 함수를 종료하는 목적으로도 사용하기도 함
+    alert('이 코드는 절대 실행되지 않습니다.'); // 그렇기 때문에 해당 코드는 실행되지 않음
 }
+const result = showError();
+console.log(result);
+// return문이 없는 함수도 항상 undefined를 반환함
+
+// 함수
+// 함수는 한번에 한작업에 집중 // 하나의 함수가 여러작업을 진행하면 함수를 더 잘게 나눠서 쓰는게 좋음
+// 읽기 쉽고 어떤 동작인지 알 수 있게 네이밍 // showError -> 에러를 보여줌 // getName -> 이름을 얻어옴
+//  createUserData -> 유저데이터 생성 // checkLogin -> 로그인 여부 체크
+
+// 7월 13일 - 함수 공부 *********************************************************************************
