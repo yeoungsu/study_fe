@@ -385,9 +385,9 @@ for(let i = 0; i < 10; i++){
 // }
 
 // 매개변수 없고 error 메세지를 보여주는 함수
-function showError() {
-    alert('에러가 발생했습니다. 다시 시도해주세요.');
-};
+// function showError() {
+//     alert('에러가 발생했습니다. 다시 시도해주세요.');
+// };
 // showError();
 
 // 어려운? 기능을 다양한 곳에 사용하기 용이함 // 유지보수가 편함
@@ -428,7 +428,7 @@ function showError() {
 // 함수 내부에서 사용하는 변수를 지역변수라고 함 // 함수 안에서만 사용할 수 있음
 // console.log(msg); // 찾을 수 없다고 뜸 // 해당 변수를 사용하려면 함수 바깥으로 빼줘야함
 
-// let msg = 'Hello'; // 이렇게 어디서나 접근 할 수 있는 변수를 전역 변수라고 한다 (global varable)
+// let msg = 'Hello'; // 이렇게 어디서나 접근 할 수 있는 변수를 전역 변수라고 한다 (global variable)
 // console.log('함수 호출 전');
 // console.log(msg);
 
@@ -437,7 +437,7 @@ function showError() {
 //         msg += `, ${name}`;
 //     }
 //     console.log('함수 내부');
-//     // 함수 내부에서만 접근할 수 있는 변수를 지역변수라고 함 (local varable)
+//     // 함수 내부에서만 접근할 수 있는 변수를 지역변수라고 함 (local variable)
 //     console.log(msg);
 // }
 // // 함수 내부에서 나온 값은 처음 let msg 에 저장이 되기 때문에 함수 호출 후에도 Hello, mike 라고 결과값이 나옴
@@ -496,14 +496,14 @@ function showError() {
 // const result = add(2,3); // 3을 result에 반환
 // console.log(result);
 
-function showError(){
-    alert('에러가 발생했습니다.');
-    return; // return만 있어도 undefined를 반환 // return문이 있으면 그 즉시 오른쪽에 있는 값을 반환하고 종료함
-    // 함수를 종료하는 목적으로도 사용하기도 함
-    alert('이 코드는 절대 실행되지 않습니다.'); // 그렇기 때문에 해당 코드는 실행되지 않음
-}
-const result = showError();
-console.log(result);
+// function showError(){
+//     alert('에러가 발생했습니다.');
+//     return; // return만 있어도 undefined를 반환 // return문이 있으면 그 즉시 오른쪽에 있는 값을 반환하고 종료함
+//     // 함수를 종료하는 목적으로도 사용하기도 함
+//     alert('이 코드는 절대 실행되지 않습니다.'); // 그렇기 때문에 해당 코드는 실행되지 않음
+// }
+// const result = showError();
+// console.log(result);
 // return문이 없는 함수도 항상 undefined를 반환함
 
 // 함수
@@ -512,3 +512,196 @@ console.log(result);
 //  createUserData -> 유저데이터 생성 // checkLogin -> 로그인 여부 체크
 
 // 7월 13일 - 함수 공부 *********************************************************************************
+
+// 함수 선언문 과 함수 표현식의 차이 // 호출할 수 있는 타이밍
+// 함수 선언문은 어디서든 호출 가능 // 자바스크립트는 위에서 아래로 차례로 한줄씩 읽으면서 실행
+// 예를 들어
+// sayHello();
+// function sayHello(){
+//     console.log('Hello');
+// } // 해당 코드가 실행되는 이유는 자바 스크립트 내부 알고리즘 때문 // 자바스크립트는 실행 전 초기의 단계에서 코드의 모든
+// 함수 선언문을 찾아서 생성해 놓음, 즉 눈으로 봤을 때는 해당 코드만큼 이지만 실제 사용 가능 범위는 코드 위쪽 까지이다.
+// 이를 호이스팅(Hoisting)이라고한다.
+
+// 이렇게 순차적으로 실행되고 즉시 결과를 반환하는 프로그램의 언어를 // 인터프리터 언어(Interpreted language)라고 함
+
+// 함수 표현식 // 코드에 도달하면 생성 // 자바스크립트가 한줄씩 읽으면서 실행 하고 해당 코드에 도달해서야 비로소 생성됨
+// 그렇기 때문에 그 이후에만 사용할 수 있음
+// let sayHello = function(){
+//     console.log('Hello');
+// }
+
+// 화살표 함수(arrow function)
+// let add = function(num1, num2) {
+//     return num1 + num2;
+// } 해당 코드를 화살표 함수로 바꾸면
+// let add = (num1, num2) => {
+//     return num1 + num2;
+// } 로 바꿀 수 있음
+// let add = (num1, num2) => (
+//     num1 + num2;
+// ) 코드 본문이 한줄이고 리턴문이 있기 때문에 중괄호가 아닌 일반괄호로 바꿀 수 있음
+// let add = (num1, num2) => num1 + num2; // 리턴문이 한줄이라면 괄호도 생략할 수 있음
+// let sayHello = name => `Hello, ${name}`; // 인수가 딱 하나면 괄호도 생략할 수 있음
+
+// let showError = () => {
+//     alert('error!');
+// } // 인수가 없는 함수라면 괄호 생략 불가
+// let add = function(num1, num2){
+//     const result = num1 + num2;
+//     return result;
+// } // return문이 있다고해도 return전에 여러줄의 코드가 있을 경우 일반 괄호를 사용할 수 없음
+// let add = (num1, num2) => {
+//     const result = num1 + num2;
+//     return result;
+// } // 사용한다면 이런식으로 사용
+
+// 함수 표현식
+// showError();
+
+// let showError = function(){
+//     console.log('error');
+// }
+
+// 함수 선언문
+// showError();
+// function showError() {
+//     console.log('error');
+// }
+
+// 화살표 함수
+// let showError = () => {
+//     console.log('error');
+// }
+
+// const sayHello = function(name) {
+//     const msg = `Hello, ${name}`;
+//     console.log(msg);
+// } // 해당 함수를 화살표 함수로
+// const sayHello = (name) => {
+//     const msg = `Hello, ${name}`;
+//     console.log(msg);
+// }
+
+// const add = function (num1, num2) {
+//     const result = num1 + num2;
+//     return result;
+// } // 해당 함수를 화살표 함수로
+// const add = (num1, num2) => {
+//     const result = num1 + num2;
+//     return result;
+// } // return문을 한줄로
+// const add = (num1, num2) => num1 + num2;
+
+// 객체(object)
+// 하나의 superman이 있음 이름은 clark고 나이는 33이다. // 해당 문장을 객체로 만들면
+// const supermand = {
+//     name : 'clark',
+//     age : 33, // 마지막은 쉼표로 구분하는게 삭제 수정에 용이함
+// } // 객체는 중괄호로 작성하고 그 안에는 키(key)와 값(value)으로 구성된 프로퍼티가 들어감
+// 해당 객체에 접근
+// superman.name // 'clark'
+// superman['age'] // 33
+
+// 해당 객체에 추가
+// superman.gender = 'male';
+// superman['haircolor'] = 'black';
+// // 접근이나 추가 할 때는 .이나 [] 사용 가능
+
+// 해당 객체에 삭제 // 삭제는 delete 키워드를 사용
+// delete superman.haircolor;
+
+// object - 단축 프로퍼티
+// const name = 'clark';
+// const age = 33;
+// const superman = {
+//     name, // name : name
+//     age, // age : age
+//     gender : 'male',
+// }
+
+// const superman = {
+//     name : 'clark',
+//     age : 30,
+// }
+// superman.hairColor = 'black'; // 추가
+// superman['hobby'] = 'football'; //추가
+// delete superman.age; // 삭제
+// console.log(superman);
+// console.log(superman.name);
+// console.log(superman['age'])
+
+// object - 프로퍼티 존재 여부 확인
+// const superman = {
+//     name : 'clark',
+//     age : 33,
+// }
+// superman.birthDay; // 존재하지 않는 프로퍼티에 접근하면 undefined 가 뜸
+// 'birthDay' in superman; // false
+// 'age' in superman; // true // in 연산자를 사용하면 존재하는지 확인할 수 있음
+// 어떤 값이 나올지 확실할 수 없을 때 in 연산자를 사용 // 함수 인자로 봤거나 API 통신을 통해 데이터를 받을 때 등
+
+// 이름과 나이를 받아서 객체로 만드는 함수
+// function makeObject(name, age){
+//     return {
+//         name : name,
+//         age : age,
+//         // name, // 프로퍼티 이름과 변수 이름이 동일 할 때는 축약해서 사용 가능
+//         // age,
+//         hobby : 'football'
+//     }
+// }
+// const mike = makeObject('mike', 30);
+// console.log(mike)
+
+// console.log('age' in mike);
+// console.log('birthday' in mike);
+// console.log(mike.birthday)
+// console.log(mike.age)
+
+// 객체 in
+// 나이를 확인하고 성인인지 아닌지 구분하는 함수
+// function isAdult(user){
+//     if(user.age < 20){
+//         return false;
+//     }
+//     return true;
+// }
+
+// const Mike = {
+//     name : 'mike',
+//     age : 30,
+// }
+// const jane = {
+//     name : 'jane',
+// }
+// console.log(isAdult(Mike))
+// console.log(isAdult(jane))
+
+// function isAdult(user) {
+//     if (!('age' in user) || // user에 age 가 없거나
+//     user.age < 20){ // 20살 미만이면
+//         return false
+//     }
+//     return true
+// }
+// console.log(isAdult(Mike))
+// console.log(isAdult(jane))
+
+// for ... in 반복문 //
+// for(let key in superman){
+//     console.log(key);
+//     console.log(superman[key]);
+// }
+
+// 객체 for ... in
+
+const mike = {
+    name: 'mike',
+    age: 30
+};
+for(let x in mike){
+    console.log(mike[x]) // mike['name'], mike['age']
+}
+
+// 7월 15일 - 객체 *******************************************************************************************
