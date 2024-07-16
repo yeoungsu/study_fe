@@ -696,12 +696,171 @@ for(let i = 0; i < 10; i++){
 
 // 객체 for ... in
 
-const mike = {
-    name: 'mike',
-    age: 30
-};
-for(let x in mike){
-    console.log(mike[x]) // mike['name'], mike['age']
-}
+// const mike = {
+//     name: 'mike',
+//     age: 30
+// };
+// for(let x in mike){
+//     console.log(mike[x]) // mike['name'], mike['age']
+// }
 
 // 7월 15일 - 객체 *******************************************************************************************
+
+// const superman = {
+//     name : 'calrk',
+//     age : 33,
+//     fly:function(){
+//         console.log('날아갑니다.')
+//     }
+//     // fly(){
+//     //     console.log('날아갑니다.')
+//     // } // 단축 구문으로도 작성할 수 있음
+// }
+// superman.fly(); // 이렇게 객체 프로퍼티로 할당 된 함수를 method 라고 함
+
+// const user = {
+//     name : 'mike',
+//     sayHello : function(){
+//         console.log(`Hello, I'm ${this.name}`);
+//     }
+// }
+// user.sayHello();
+
+// let boy = {
+//     name : 'mike',
+//     sayHello,
+// }
+// let girl = {
+//     name : 'jane',
+//     sayHello,
+// }
+// function sayHello(){
+//     console.log(`Hello, I'm ${this.name}`)
+// }
+// sayHello : function(){
+//     console.log(`Hello, I'm ${this.name}`)
+// }
+// sayHello : () => {
+//     console.log(`Hello, I'm ${this.name}`)
+// } // 화살표 함수는 일반 함수와는 달리 자신만의 this를 가지지 않음 화살표 함수 내부에서 this를 사용하면,
+// 그 this는 외부에서값을 가져옴
+// boy.sayHello(); // Hello,I'm mike
+// girl.sayHello(); // Hello,I'm jane
+
+// let boy = {
+//     name : 'mike',
+//     sayHello : () => {
+//         console.log(this); // 전역개체 // 브라우저 환경 : window // Node js : global
+//     }
+// }
+// boy.sayHello();
+// this != boy
+
+// method
+// let boy = {
+//     name : 'mike',
+//     showName: function(){ // 해당 method(showName)의 this는 해당 객체(boy)를 가리킴
+//         // console.log(boy.name)
+//         console.log(this.name)
+//     }
+// };
+// boy.showName();
+
+// let man = boy;
+// boy = null;
+
+// man.showName();
+
+// let boy = {
+//     name : 'mike',
+//     sayThis : () => {
+//         console.log(this); // 화살표 함수에서의 this는 boy를 가리키는게 아니라 전역객체를 가리킴
+//     }
+// };
+// boy.sayThis();
+
+// 배열(Array) // 순서가 있는 리스트
+// 1번에 철수 2번에 영희 ... 30번에 영수 // 이것을 코드로 만들면
+let students=['철수', '영희', ...'영수']; // 배열은 대괄호를 사용 쉼표로 구분 // index->배열을 탐색할 때 사용하는 고유번호
+console.log(students[0]); // 철수
+console.log(students[1]); // 영희
+console.log(students[29]); // 영수
+students[0] = '민정'; // 수정가능 // 해당 코드를 이용하면 첫번째 학생을 민정으로 바꿀 수 있음
+console.log(students) // ['민정', '영희', ...]
+
+// 배열의 특징
+// 배열은 문자 뿐만 아니라, 숫자, 객체, 함수 등도 포함할 수 있음
+// length // 배열의 길이 // students.length // 30
+// push() : // 배열 끝에 추가
+// let days = ['월', '화', '수'];
+// days.push('목')
+// console.log(days) // ['월', '화', '수', '목']
+// pop(): // 배열 끝 요소 제거
+// let days = ['월', '화', '수'];
+// days.pop()
+// console.log(days) // ['월', '화']
+// shift, unshift // 배열 앞에 제거/추가
+// days.unshift('일'); // 추가 // 여러 요소를 한번에 추가 할 수도 있음
+// console.log(days) // ['일', '월', '화', '수']
+// days.shift('일'); // 제거
+// console.log(days) // ['월', '화', '수']
+
+// 배열을 쓰는 가장 큰 이유중 1번은 반복문 : for
+// let days = ['월', '화', '수'];
+// for(let index = 0; index < days.length; index++){
+//     console.log(days[index]) // 0~2까지 반복
+// }
+
+// 2번째 이유 for .. of // 객체를 순환하는 for .. in이랑 헷갈리지 않기, 사용은 가능하지만 장점보다 단점이 많음
+// let days = ['월', '화', '수']
+// for(let day of days) {
+//     console.log(day)
+// }
+
+// 예시 array
+// let days = ['mon', 'tue', 'wed'];
+// days[1] = '화요일' // 수정 가능
+// days.push('thu'); // 제일 뒤에 목요일 추가
+// days.unshift('sun'); // 제일 앞에 일요일 추가
+// console.log(days[1]);
+// console.log(days.length); // 길이 체크
+
+// for(let index=0; index<days.length; index++){
+//     console.log(days[index]);
+// }
+// for(let day of days){
+//     console.log(day);
+// }
+
+// 7월 16일 - 배열까지 마무리 **************************************************************************************
+
+// - 정리 -
+// const name = 'mike';
+// let age = 30;
+// 변수 설정 할 수 있음
+// Boolean, Null, Undefined, Number, String, Object
+// 자료형에 대해 이해 할 수 있음
+// console.log(name);
+// alert(age); // console, alert등을 이용해 값을 확인할 수 있고
+// prompt('생년월일을 입력하세요');
+// confirm('삭제 하시겠습니까?'); // prompt와 confirm을 통해 사용자들에게 원하는 값을 입력받을 수 있음
+
+// if(user.name && user.age > 19){
+//     console.log('성인 입니다.');
+// } else {
+//     return false;
+// } // 연산자와 조건문을 활용해 각기다른 상황에 대응할 수 있음
+
+// for (let i = 0; i < 10; i++){
+//     console.log(i);
+// } // 반복문으로 힘들이지 않고 동일한 작업을 반복할 수 있음
+
+// function add (num1, num2) {
+//     console.log(num1, num2);
+// }
+// const user = {
+//     name : 'mike',
+//     age : '30',
+// }
+// const users = ['mike', 'jane']
+// 함수와 객체 배열에 대해 배웠음
