@@ -273,3 +273,175 @@
 // console.log(result);
 
 // 7.17 생성자 함수 및 객체에서 사용가능한 method ************************************************************
+
+// 심볼(symbol)
+// const a = Symbol(); // new를 붙이지 않음 // 유일한 식별자를 만들 때 사용 // 유일성 보장
+// const b = Symbol();
+
+// console.log(a) // Symbol()
+// console.log(b) // Symbol()
+// 콘솔로 값을 봤을 때는 Symbol로 같게 나오지만
+// a === b; false // a == b; false // 일치연산자로 값을 보면 false가 나옴
+
+// const id = Symbol('id'); // 심볼을 만들 때 설명을 붙여줄 수 있음 // 설명을 붙여주면 디버깅할때 편함
+// const id2 = Symbol('id');
+// console.log(id) // Symbol(id)
+// console.log(id2) // Symbol(id) 로 똑같이 나오지만
+// id === id2; false // id == id2; false // 일치연산자로 값을 보면 false가 나옴
+
+// property key : 심볼형
+// const id = Symbol('id');
+// const user = {
+//     name : 'mike',
+//     age : 30,
+//     [id] : 'myid'
+// }
+// console.log(user);
+// console.log(user[id]);
+
+// Object.keys(user); // ["name", "age"]
+// Object.values(user); // ["mike", 30]
+// Object.entries(user); // [Array(2), Array(2)] // 심볼로만든 프로퍼티는 건너 뜀
+// for(let a in user){} // 마찬가지로 for .. in 구문도 건너뜀
+
+// const user = {
+//     name : 'mike',
+//     age : 30,
+// }
+// const id = Symbol('id');
+// user[id] = 'myid'; // 특정 개체에 원본 데이터를 건드리지 않고 속성을 추가할 수 있음
+// 다른사람이 만든 객체에 자신만의 속성을 추가해서 덮어쓰면 안되고 // 너무 긴 이름을 쓰는 것도 좋지 않음
+// 만약 그 원본객체가 어딘가에서 Object.keys나 for..in으로 순회하면서 데이터를 사용하고 있을 수도 있기 때문
+
+// Symbol.for() : 전역 심볼
+// 하나의 심볼만 보장받을 수 있음 // 없으면 만들고, 있으면 가져오기 때문
+// Symbol 함수는 매번 다른 Symbol 값을 생성하지만, Symbol.for 메소드는 하나를 생성한 뒤 키를 통해 같은 Symbol을 공유
+// const id1 = Symbol.for('id');
+// const id2 = Symbol.for('id');
+// id1 === id2; // true // 전역 심볼이기 때문에 같음
+// Symbol.keyfor(id1) // 'id' // 생성할 때 적어두었던 이름을 알려줌
+
+// description
+// const id = Symbol('id 입니다.');
+// id.description; // 'id 입니다.'
+
+// 숨겨진 Symbol key 보는 법
+// const id = Symbol('id');
+
+// const user = {
+//     name : 'mike',
+//     age : 30,
+//     [id] : 'myid'
+// }
+// Object.getOwnPropertySymbols(user); // [Symbol(id)]
+// Reflect.ownKeys(user); ['name', 'age', Symbol(id)] // 심볼키를 포함한 객체 모든 키를 보여줌
+// 대부분의 라이브러리 내장함수 등은 이런 method들을 사용하지 않음, 그러므로 유일한 프로퍼티를 추가하고 싶을 때 심볼을 사용
+
+// 예시 // 다른 개발자가 만들어 놓은 객체
+// const user = {
+//     name : 'mike',
+//     age : 30
+// };
+
+// 본인 작업
+// user.showName = function(){}; // 해당 메세지가 뜨기 때문에 이 구문은 쓰지말것
+// const showName = Symbol('show name');
+// user[showName] = function(){
+//     console.log(this.name);
+// }; // Symbol로 만들었기 때문에 아래 for..in 문에서 걸리지 않음
+// user[showName]();
+
+// 사용자가 접속하면 보는 메세지
+// for (let key in user) {
+//     console.log(`His ${key} is ${user[key]}.`);
+// }
+
+// 숫자와 수학 method
+
+// 10진수 -> 2진수/16진수 // 개발을 하다보면 2진수나 색상표현을 위해 16진수로 표현할 때가 있음
+// let num = 10;
+// num.toString(); // "10" // 숫자를 문자열로 변환
+// num.toString(2); // "1010" // () 괄호안에 숫자를 쓰면 해당 그 숫자의 진법으로 변환 10을 2진수로 변환한 것
+
+// let num2 = 255;
+// num2.toString(16); // "ff"
+
+// Math // 자바 스크립트에는 수학과 관련된 프로퍼티와 method들을 가지고 있는 Math라는 내장객체가 있음
+// Math.PI; // 대표적인 예
+
+// Math.ceil() // 올림
+// let num1 = 5.1;
+// let num2 = 5.7;
+
+// Math.ceil(num1); // 6
+// Math.ceil(num2); // 6
+
+// Math.floor() // 내림
+// Math.floor(num1); // 5
+// Math.floor(num2); // 5
+
+// Math.round() // 반올림
+// Math.round(num1); // 5
+// Math.round(num2); // 6
+
+// 소수점 자릿수
+// 작업을 하다보면 소수점까지 표현해야 할 때가 있음
+// let userRate = 30.1234;
+// 예를들어 요구사항이 // 소수점 둘째자리 까지 표현 (셋째 자리에서 반올림) // 이런 경우는
+// Math.round(userRate * 100)/100; // 30.12 // 이런 식으로 값을 구함
+// 혹은 toFixed() method를 사용함 // 해당 method는 숫자를 인수로 받아 그 숫자만큼 소수점 예하 갯수에 반영함
+// userRate.toFixed(2); // '30.12'
+// userRate.toFixed(0); // 0이면 소수가 없으니까 정수인 '30'으로 표현
+// userRate.toFixed(6); // 넘어가는 부분을 0으로 채워줌 30.123400;
+// 통계나 지표자료 구할 때 많이 사용됨 // 주의할 점 // toFixed는 문자열을 반환한다는 것
+// Number(userRate.toFixed(2)); // 30.12
+// 그렇기 때문에 반환받은 이후 Number를 이용해 숫자로 다시 반환받아 이용하는 경우가 많음
+
+// isNaN() // NaN이 아닌지 판단해줌
+// let x = Number('x'); // NaN
+// x == NaN // false
+// x === NaN // false
+// NaN == NaN // false // NaN은 신기하게도 자기자신과도 똑같지 않다고 판단함
+
+// isNaN(x) // true
+// isNaN(3) // false // isNaN만이 NaN인지 아닌지 판단이 가능
+
+// parselnt() // 문자열을 숫자로 바꿔줌 // Number와 다른점은 문자와 혼합되어 있어도 동작을 함
+let margin = '10px';
+parseInt(margin); // 10 // 읽을 수 있는 부분까지만 읽고 문자를 만나면 (읽은 부분을)숫자로 변환함
+Number(margin); // NaN
+
+let redColor = 'f3';
+// parseInt(redColor); // NaN // 그렇기 때문에 숫자로 시작하지 않으면 NaN을 반환함
+parseInt(redColor, 16); // 243 // 그러나 parseInt는 두번째 인수를 받아서 진수를 지정할 수 있음
+parseInt('11', 2) // 3 // 문자열 11을 받고 2진수에서 10진수로 손쉽게 바꿀 수 있음
+
+// parseFloat()
+let padding = '18.5%';
+parseInt(padding); // 18 // 소수점은 무시하고 정수만 반환
+parseFloat(padding); // 18.5 // parseInt와 비슷하게 동작하지만 parseFloat은 부동소수점을 반환함
+
+Math.random() // 0~1 사이 무작위 숫자 생성
+// 만약 1~100 사이 임의의 숫자를 뽑고 싶다면?
+Math.floor(Math.random()*100)+1 // 식을 만들어 사용
+// Math.random으로 숫자를 생성 ex : 0.6789
+// 0.6789*100 -> 67.89 // Math.floor를 이용해서 소수점 뒷자리를 버림 67
+// 마지막에 1을 더해줌 // 1을 더하는 이유는 0~100 사이가 아닌 1~100 사이의 숫자를 구하기 때문 그 이유는
+// Math.random에서 0.0034 가 나올 수도 있기 때문 그러면 0이 되기 때문에 0의 숫자가 나와버림
+// 구하려는 것은 1~100 사이기 때문에 +1을 해준다
+// let a = Math.floor(Math.random()*100)+1
+// console.log(a)
+
+// Math.max(1,4,-1,5,10,9,5.54); // 10 // 괄호 안의 인수들 중 최댓값
+// Math.min(1,4,-1,5,10,9,5.54); // -1 // 괄호 안의 인수들 중 최솟값
+
+// Math.abs() // 절댓값 // 여기서 abs는 absolute의 약자
+Math.abs(-1) // 1
+
+// Math.pow(n, m)/ // 제곱 // pow는 power의 약자
+Math.pow(2,10); // 1024
+
+// Math.sqrt() // 제곱근 // squre
+Math.sqrt(16) // 4 // 4의제곱
+
+// 7.19 심볼, 숫자와 수학 method *******************************************************************************
