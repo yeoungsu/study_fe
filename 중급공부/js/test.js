@@ -445,3 +445,113 @@ Math.pow(2,10); // 1024
 Math.sqrt(16) // 4 // 4의제곱
 
 // 7.19 심볼, 숫자와 수학 method *******************************************************************************
+
+// 문자열 method
+
+// let desc = `오늘은 맑고 화창한
+// 날씨가 계속 되겠습니다.
+// 내일은 비소식이 있습니다.` // 여러줄 포함 가능
+// let desc = '오늘은 맑고 화창한\n날씨가 계속 되겠습니다.' // 작은 따옴표는 여러줄을 쓰려면 \n가 필요함 // 그리고 줄바꿈을 하면 에러가 남
+
+// length : 문자열 길이
+// let desc = '안녕하세요.';
+// desc.length // 6 // 보통 회원가입 할 때 아이디나 비밀번호 몇자 이상, 이하로 제한할 때 체크하곤 함
+// desc [2] // '하' // 대괄호로 특정 위치의 문자로 접근할 수 있음 // 배열과 같이 0부터 시작
+// desc [4] = '용';
+// console.log(desc); // 안녕하세요. // 하지만 배열과 다르게 한글자만 바꾸는건 허용되지 않음
+
+// toUpperCase() / toLowerCase() // 영어인 경우 해당 method를 사용해 대문자와 소문자로 변경가능
+// let desc = "Hi guys. Nice to meet you.";
+// desc.toUpperCase(); // "HI GUYS. NICE TO MEET YOU" // 모든 영문자를 대문자로
+// desc.toLowerCase(); // "hi guys. nice to meet you" // 모든 영문자를 소문자로
+
+// str.indexOf(text) // 문자를 인수로 받아 몇번째 위치하는지 알려줌
+// let desc = "Hi guys. nice to meet you.";
+// desc.indexOf('to'); // 14 // 0부터 셈
+// desc.indexOf('man'); // -1 // 만약 찾는 문자가 없다면 -1을 반환함
+// 주의할 점은 포함된 문자가 여러개라도 첫번째 위치만 반환함
+// if(desc.indexOf('Hi') > -1){ // if문을 쓸 때 주의해야함 // Hi로 시작하는 문장이라 indexOf('Hi')는 0이기 때문
+//     // if에서 0은 false이고 따라서 해당 console은 찍히지 않음
+//     console.log('Hi가 포함된 문장입니다.') // 그래서 항상 -1보다 큰가로 비교하면 됨
+// }
+
+// str.slice(n,m) // slice는 n부터 m까지의 문자열을 반환함 n은 시작점이고 m은 없으면 문자열 끝까지이고
+// 양수면 그 숫자까지(포함하지 않음) 음수면 끝에서부터 셈
+// let desc = "abcdefg"
+// desc.slice(2); // "cedfg"
+// desc.slice(0,5); // "abcde"
+// desc.slice(2,-2); // "cde"
+
+// str.substring(n,m) // n과 m사이의 문자열을 반환 // n과 m을 바꿔도 동작함 // 음수는 0으로 인식
+// desc.substring(2,5); // "cde"
+// desc.substring(5,2); // "cde"
+
+// str.sbustr(n,m) // n부터 시작 m개를 가져옴
+// desc.substr(2,4) // "cdef"
+// desc.substr(-4,2) // "de"
+
+// str.trim(); // 문자열 앞 뒤 공백 제거
+// let desc = " coding      ";
+// desc.trim(); // "coding"
+
+// str.repeat(n); // n번 반복
+// let hello = "hello!";
+// hello.repeat(3); // "hello!hello!hello!"
+
+// 문자열 비교
+// 1 < 3 // true // 1보다 3이 크듯이
+// "a" < "c" // true // a보다 c가 큼
+// "a".codePointAt(0); // 97 // 해당 문자의 숫자크기
+// String.fromCodePoint(97); // "a"
+
+// 예제
+// let list = [
+//     "01. 들어가며",
+//     "02. JS의 역사",
+//     "03. 자료형",
+//     "04. 함수",
+//     "05. 배열",
+// ];
+
+// let newList = [];
+
+// for(let i=0; i<list.length;i++){
+//     newList.push(list[i].slice(4));
+// }
+
+// console.log(newList);
+
+// 예제 금칙어 : 콜라
+// function hasCola(str){
+//     if(str.indexOf('콜라') > -1){ // -1보다 큰지 체크를 해야함
+//         console.log('금칙어가 있습니다.');
+//     } else {
+//         console.log('통과');
+//     }
+// }
+
+// hasCola('와 사이다가 짱이야!'); // -1 // 음수는 true이기 때문에 실패
+// hasCola('무슨소리, 콜라가 최고');
+// hasCola('콜라'); // 0 // if에서 0은 false이기 때문에 통과
+// 예제 금칙어 : 콜라
+// includes
+// 문자가 있으면 true 없으면 false로 반환
+
+// function hasCola(str){
+//     if(str.includes('콜라')){ // -1보다 큰지 체크를 해야함
+//         console.log('금칙어가 있습니다.');
+//     } else {
+//         console.log('통과');
+//     }
+// }
+
+// hasCola('와 사이다가 짱이야!'); // -1 // 음수는 true이기 때문에 실패
+// hasCola('무슨소리, 콜라가 최고');
+// hasCola('콜라'); // 0 // if에서 0은 false이기 때문에 통과
+
+// let string = "HELLO, WORLD!"
+// let uppercase_string = string.toUpperCase();
+// console.log(lowercase_string)
+
+
+// 7.22 문자열 method *******************************************************************************
