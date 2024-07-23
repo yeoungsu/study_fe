@@ -553,5 +553,281 @@ Math.sqrt(16) // 4 // 4의제곱
 // let uppercase_string = string.toUpperCase();
 // console.log(lowercase_string)
 
+// 7.22 문자열 method *******************************************************************************************
 
-// 7.22 문자열 method *******************************************************************************
+// Array
+
+// arr.splice(n,m) : 특정 요소 지움 // n번째 요소부터 m개의 요소
+// let arr = [1,2,3,4,5];
+// arr.splice(1,2); // 1번부터 2개 지움
+// console.log(arr); // [1,4,5]
+
+// arr.splice(n,m,x) : 특정 요소를 지우고 x추가
+// let arr = [1,2,3,4,5];
+// arr.splice(1,3,100,200);
+// console.log(arr); // [1,100,200,5]
+
+// let arr = ["나는", "철수", "입니다."]
+// arr.splice(1,0,"대한민국", "소방관"); // 아무것도 지우지않고 중간에 새로운 요소를 추가
+// console.log(arr)
+
+// arr.splice() : 삭제된 요소 반환
+// let arr = [1,2,3,4,5];
+// let result = arr.splice(1,2);
+// console.log(arr); // [1,4,5]
+// console.log(result); // [2,3]
+
+// arr.slice(n,m) : n부터 m까지 반환 // m은 포함하지 않고 바로 앞까지만 의미, 쓰지 않으면 끝번호까지
+// let arr = [1,2,3,4,5];
+// arr.slice(1,4); [2,3,4];
+
+// let arr2 = arr.slice(); // 괄호안에 아무것도 넣지 않으면 배열이 복사됨
+// console.log(arr2); // [1,2,3,4,5]
+
+// arr.concat(arr2,arr3 ..) : 합쳐서 새배열 반환
+// let arr = [1,2]
+// arr.concat([3,4]); // [1,2,3,4]
+// arr.concat([3,4],[5,6]); // 2개의 배열을 한번에 합칠 수도 있음
+// arr.concat([3,4],5,6) // 각각 전달해도 반환하는 것은 동일
+
+// arr.forEach(fn) : 배열 반복 // 함수를 인수로 받음 // 
+// let users = ["mike", "tom", "jane"];
+// users.forEach((item, index, arr) => { // 3개의 매개변수가 있음, 첫번째는 해당 요소,
+//     // 두번째는 인덱스, 세번째는 해당배열 자체를 의미 // 보통 첫번째와 두번째만 사용
+//     // ..
+// });
+
+// forEach 예시
+
+// let arr = ["mike", "tom", "jane"];
+
+// arr.forEach((name, index)=>{
+//     console.log(`${index + 1}. ${name}`) // 이런식으로 forEach를 이용해서 배열을 순회할 수있음
+// });
+
+// arr.indexOf / arr.lastIndexOf
+// let arr = [1,2,3,4,5,1,2,3];
+// arr.indexOf(3); // 2 // 발견하면 해당 요소의 index를 반환하고 없으면 -1을 반환함
+// arr.indexOf(3,3); // 7 // 괄호안에 해당 식처럼 쓰면 2번째 숫자는 시작 위치를 의미함
+// arr.lastIndexOf(3); // 7 // 끝에서부터 탐색하고 싶을 때 사용
+
+// arr.includes() : 포함하는지 확인 // index를 확인하지않고 포함하는 지만 확인하고 싶을 때 사용
+// let arr = [1,2,3];
+// arr.includes(2); // true
+// arr.includes(8); // false
+
+// arr.find(fn) / arr.findIndex(fn) // 찾는 다는 의미는 같지만 보다 복잡한 연산이 가능하도록 함수를 전달 가능
+// 주의할 점 // 첫번째 true값만 반환하고 끝나며 만약 없다면 undefined를 반환
+
+// find / findIndex
+// let arr = [1,2,3,4,5];
+// const result = arr.find((item)=>{
+//     return item % 2 === 0;
+// })
+// console.log(result)
+
+// let userList = [
+//     {name : "mike", age : 30},
+//     {name : "jane", age : 27},
+//     {name : "tom", age : 10},
+// ];
+
+// const result = userList.find((user)=>{
+//     if(user.age < 19){
+//         return true;
+//     }
+//     return false;
+// })
+// console.log(result);
+
+// const result = userList.findIndex((user)=>{ // 조건에 만족하는 index를 찾음
+//     if(user.age < 19){
+//         return true;
+//     }
+//     return false;
+// })
+// console.log(result);
+
+// arr.filter(fn) : 만족하는 모든 요소를 배열로 반환
+// let arr = [1,2,3,4,5];
+// const result = arr.filter((item)=>{
+//     return item % 2 === 0;
+// })
+// console.log(result)
+
+// arr.reverse() : 역순으로 재정렬 // 최근 가입한 유저를 보여주거나 게시판에 가장 최근에 작성된 글순서를 정렬할 때 사용
+
+// let arr = [1,2,3,4,5];
+// arr.reverse(); // [5,4,3,2,1]
+
+// arr.map(fn) : 함수를 받아 특정 기능을 시행하고 새로운 배열을 반환
+// 매번 나이를 확인하기 귀찮아서 isAdult라는 프로퍼티를 추가한 새로운 배열을 만들어보기
+// let userList = [
+//     {name : "mike", age : 30},
+//     {name : "jane", age : 27},
+//     {name : "tom", age : 10},
+// ]
+// let newUserList = userList.map((user, index)=>{ // user객체와 index를 받음
+//     return Object.assign({}, user, {
+//         id : index + 1,
+//         isAdult : user.age > 19,
+//     });
+// });
+// console.log(newUserList);
+// console.log(userList);
+
+// join
+// let arr = ["안녕", "나는", "철수야"];
+
+// let result = arr.join("-"); 
+// let result = arr.join(); // 인수로 전달하는게 구분점, 괄호안에 아무것도 없으면
+// console.log(result); // 안녕, 나는, 철수야 // 쉼표로 구분되어서 합쳐짐
+
+// split // 문자열을 나눠서 배열로 만들어 줌
+// const users = "mike, jane, tom, tony";
+// const result = users.split(""); // 
+// const result = users.split(","); // 어떤 문자로 나눌것인지 정해주기
+// console.log(result);
+
+// Array.isArray() : 배열인지 아닌지 확인하는 method
+// let user = {
+//     name : "mike",
+//     age : 30,
+// };
+
+// let userList = ["mike", "tom", "jane"];
+// console.log(typeof user); // object
+// console.log(typeof userList); // object
+
+// console.log(Array.isArray(user)); // false
+// console.log(Array.isArray(userList)); // true
+
+// arr.sort() / arr.reduce()
+
+// arr.sort() : 배열을 재정렬해줌 // 배열 자체가 변경되니 주의 // 인수로 정렬 로직을 담은 함수를 받음
+
+// let arr = [1,5,4,2,3];
+// let arr = ["a","d","c","b","e"];
+// arr.sort();
+// console.log(arr);
+// let arr = [27,8,5,13];
+// arr.sort(); // 정렬할 때 요소를 문자열로 취급
+// console.log(arr); // [13,27,5,8] // 값을 비교해줄 수 있는 함수를 전달해야 함
+
+// let arr = [27,8,5,13];
+// function fn (a,b){
+//     return a - b;
+// }
+
+// arr.sort(fn);
+// arr.sort((a,b) => { // 두 요소를 전달하고
+//     return a - b; // 크기를 비교해서 양수인지 0인지 음수인지만 전달해주면 됨
+//     // a와 b를 비교해서 a가 작으면 a를 앞으로 보냄, 0을 반환하면 가만히 있음, a가 크면 b가 작으니 b를 앞으로 보냄
+// });
+// console.log(arr);
+
+// Lodash를 이용하면 _.sortBy(arr); 로 사용가능 // 숫자든 문자든 원하는 기준으로 정렬해줌
+// https://lodash.com/
+
+// arr.reduce() // 인수로 함수를 받음
+// (누적 계산값, 현재값) => {return 계산값};
+
+// 배열의 모든 수 합치기
+// let arr = [1,2,3,4,5];
+
+// for, for of, forEach
+
+// let result = 0;
+// arr.forEach((num) => {
+//     result += num;
+// });
+// console.log(result);
+
+// const result = arr.reduce((prev, cur)=>{ // reduce는 함수를 받는데 prev(이전값)과 cur(현재값)을 사용
+//     return prev + cur; // 
+// }, 0); // 초기값은 0 // 안써도 상관은 없고 쓰지 않으면 변수arr의 첫번째 숫자인 1이 들어감
+
+// let userList = [
+//     {name : "mike", age : 30},
+//     {name : "tom", age : 10},
+//     {name : "jane", age : 27},
+//     {name : "sue", age : 26},
+//     {name : "harry", age : 42},
+//     {name : "steve", age : 60},
+// ];
+
+// let result = userList.reduce((prev, cur)=>{
+//     if(cur.age > 19) { // 만약 현재 나이가 19보다 크면
+//         prev.push(cur.name); // 현재값의 이름을 누적 값에 들어감
+//     }
+//     return prev; // ex:["mike"] 이런 식으로 그 후에 다시 작동
+// }, []) // 초기값은 []빈 배열
+
+// console.log(result);
+
+// 나이의 합
+// let result = userList.reduce((prev, cur)=>{
+//     return prev += cur.age;
+// }, 0) // 초기값은 0
+
+// console.log(result);
+
+// let result = userList.reduce((prev, cur)=>{
+//     if(cur.name.length === 3){
+//         prev.push(cur.name);
+//     }
+//     return prev
+// }, []) // 초기값은 []
+
+// console.log(result);
+
+// 구조 분해 할당 (Destructuring assignment)
+// 구조 분해 할당 구문은 배열이나 객체의 속성을 분해해서 그 값을 변수에 담을 수 있게 하는 표현식
+
+// 배열 구조 분해
+// let [x,y] = [1,2]
+// x == 1 // y == 2
+
+// 예제
+// let users = ["mike", "tom", "jane"];
+// let [user1, user2, user3] = users;
+// let user1 = users[0]
+// let user2 = users[1]
+// let user3 = users[2]
+
+// let str = "mike-tom-jane";
+// let [user1, user2, user3] = str.split("-"); // split("-")나온 결과인 ["mike", "tom", "jane"]을 각각 분배함
+
+// 배열 구조 분해 : 기본값
+// let [a,b,c] = [1,2]; // 만약 해당하는 값이 없는 c에는 undefined가 들어감
+// 이럴때 미리 기본값을 주면 에러를 방지할 수 있음
+// let [a=3, b=4, c=5] = [1,2]
+// console.log(a); // 1
+
+// 배열 구조 분해 : 일부 반환값 무시
+// let [user1, ,user2] = ['mike', 'tom', 'jane', 'tony']; // 공백과 쉼표를 이용해서 필요하지 않은 배열 요소를 무시
+// console.log(user1); // mike
+// console.log(user2); // jane
+
+// 배열 구조 분해 : 바꿔치기
+// let a = 1;
+// let b = 2;
+// [a,b] = [b,a]; // b = 1, a = 2
+
+// 객체 구조 분해
+let user = {
+    name : 'mike',
+    age : 30,
+}
+// let {name, age}= user; // 해당 코드는 let name = user.name // let age = user.age 와 같음
+// let {age, name} = user; // 순서를 바꿔도 위와 동일하게 작동함
+
+// 객체 구조 분해 : 새로운 변수 이름으로 할당
+// let {name:userName, age:userAge} = user;
+
+// 객체 구조 분해 : 기본값
+let {name, age, gender} = user; // gender는 undefined
+// let {name, age, gender = 'male'} = user; // user객체에 gender값이 없으면 male로 기본 할당됨
+// 유저 객체에 gender가 있으면 그 값이 사용됨 객체로 받은 값이 undefined일 때만 기본값이 사용됨
+
+// 7.23 배열 method // 구조 분해 할당  ******************************************************************************
