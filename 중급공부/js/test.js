@@ -815,10 +815,10 @@ Math.sqrt(16) // 4 // 4의제곱
 // [a,b] = [b,a]; // b = 1, a = 2
 
 // 객체 구조 분해
-let user = {
-    name : 'mike',
-    age : 30,
-}
+// let user = {
+//     name : 'mike',
+//     age : 30,
+// }
 // let {name, age}= user; // 해당 코드는 let name = user.name // let age = user.age 와 같음
 // let {age, name} = user; // 순서를 바꿔도 위와 동일하게 작동함
 
@@ -826,8 +826,161 @@ let user = {
 // let {name:userName, age:userAge} = user;
 
 // 객체 구조 분해 : 기본값
-let {name, age, gender} = user; // gender는 undefined
+// let {name, age, gender} = user; // gender는 undefined
 // let {name, age, gender = 'male'} = user; // user객체에 gender값이 없으면 male로 기본 할당됨
 // 유저 객체에 gender가 있으면 그 값이 사용됨 객체로 받은 값이 undefined일 때만 기본값이 사용됨
 
 // 7.23 배열 method // 구조 분해 할당  ******************************************************************************
+
+// 나머지 매개변수(Rest parameters), 전개 구문(Spread syntax)
+
+// function showName(name){ // 자바스크립트에서 함수에 넘겨주는 인수의 갯수는 제약이 없음
+//     // 인수의 갯수를 정해놓고 함수를 만들어도 실제 호출할 때는 정확이 그 갯수를 맞출 필요는 없음
+//     console.log(name);
+// };
+// showName('mike'); // 'mike'
+// showName('mike','tom'); // 'mike'
+// showName(); // 심지어 하나도 적지 않아도 됨 // undefined가 뜸
+
+// 함수에 인수를 얻는 방법 2가지
+
+// arguments // 화살표 함수에는 존재하지 않음
+// 함수로 넘어온 모든 인수에 접근 / 함수내에서 이용가능한 지역 변수
+// length / index // 속성을 가지고는 있지만 배열이 아님
+// Array 형태의 객체
+// 배열의 내장 메서드 없음(forEach, map)
+// function showName(name){
+//     console.log(arguments.length); // arguments의 length는 받은 인수의 갯수로 인지
+//     console.log(arguments[0]);
+//     console.log(arguments[1]);
+// };
+// showName('mike','tom');
+
+// 나머지 매개 변수 // 정해지지 않은 인수의 수를 배열로 나타낼 수 있게 함
+// function showName(...names){ // ...배열이름 // 
+//     console.log(names);
+// };
+// showName(); // [] // 아무것도 전달하지 않으면 undefined가 아니라 빈 배열이 나옴
+// showName('mike'); // []
+// showName('mike', 'tom'); // ['mike', 'tom']
+
+// 나머지 매개변수 예제
+// 전달 받은 모든 수를 더해야함
+// function add(...numbers){ // 여기서 numbers는 배열
+//     let result = 0; // 초기값은 0으로 설정
+//     numbers.forEach((num)=>(result += num)); // forEach로 반복
+//     console.log(result); // 
+// };
+// function add(...numbers){ // 여기서 numbers는 배열
+//     let result = numbers.reduce((prev, cur) => prev + cur); // reduce도 사용 가능
+//     console.log(result); // 
+// };
+// add(1,2,3); // 해당 인수의 수를 ...numbers에 넣고 forEach로 반복하면서 result에 더해줌
+// add(1,2,3,4,5,6,7,8,9,10);
+
+// user 객체를 만들어 주는 생성자 함수
+
+// function User(name, age, ...skills){ // 생성자 함수의 이름 첫글자는 대문자로 // 나머지 매개변수가 마지막에 있어야함
+//     this.name = name;
+//     this.age = age;
+//     this.skills = skills;
+// }
+// const user1 = new User('mike', 30, 'html', 'css');
+// const user2 = new User('tom', 20, 'JS', 'React');
+// const user3 = new User('jane', 10, 'English');
+
+// console.log(user1);
+// console.log(user2);
+// console.log(user3);
+
+// 전개 구문(Spread syntax) : 배열
+// let arr1 = [1,2,3];
+// let arr2 = [4,5,6];
+
+// let result = [0, ...arr1, ...arr2, 7,8,9];
+// console.log(result);
+// 전개 구문(Spread syntax) : 배열
+// let user = {name : 'mike'}
+// let mike = {...user, age:30};
+// console.log(mike);
+
+// 전개 구문(Spread syntax) : 복제
+// let arr = [1,2,3];
+// let arr2 = [...arr]; // [1,2,3]
+
+// let user = {name : 'mike', age:30};
+// let user2 = {...user};
+
+// user2.name = 'tom'; // user2의 이름을 tom으로 바꾸어도
+
+// console.log(user.name); // 'mike' // user의 이름에는 아무 영향을 미치지 않음 별개의 user2로 복제된 것
+// console.log(user2.name); // 'tom'
+
+// 전개 구문
+// arr1 을 [4,5,6,1,2,3]dmfh
+// let arr1 = [1,2,3];
+// let arr2 = [4,5,6];
+
+// arr2.reverse().forEach((num) => { // .reverse를 붙여줘야 가능
+//     arr1.unshift(num); // [6,5,4,1,2,3] // 4를 넣고 그 앞에 5와 6을 차례로 집어넣기 때문에 안됨
+// });
+
+// arr1 = [...arr2, ...arr1];
+
+// console.log(arr1);
+
+// let user = {name : 'mike'};
+// let info = {age : 30};
+// let fe = ['JS', 'React'];
+// let lang = ['Korean', 'English']
+
+// user = Object.assign({}, user, info,{
+//     skills : [],
+// })
+
+// fe.forEach((item)=>{
+//     user.skills.push(item);
+// });
+// lang.forEach((item)=>{
+//     user.skills.push(item);
+// });
+
+// user = {
+//     ...user,
+//     ...info,
+//     skills : [
+//         ...fe,
+//         ...lang,
+//     ]
+// };
+
+// console.log(user);
+
+// 클로저 (Closure)
+
+// 어휘적 환경(Lexical Environment)
+// 코드가 실행되면 스크립트 내에서 선언한 변수들이 Lexical Environment에 올라감
+let one; // 어휘적 환경으로 올라가지만 초기화 X // 그렇기 때문에 사용 불가 // let으로 선언한 변수도 hoisting됨
+// 어휘적 환경에서 아직 할당이 안되었기 때문에 one은 undefined를 가짐 // 사용을 해도 에러는 나지 않음 값이 undefined기때문
+one = 1; // 숫자 1이 할당
+function addOne(num) { // 함수 선언문은 변수와 달리 바로 초기화 됨 // 그래서 해당 위치에서도 사용 가능
+    console.log(one + num);
+}
+addOne(5); // 마지막 라인에서 함수가 실행된다 그 순간 새로운 어휘적 환경이 만들어짐 num:5
+// 함수가 넘겨받은 매개변수와 지역변수들이 존재함
+
+function makeAdder(x){
+    return function(y){ // y를 가지고 있고 상위함수인 makeAdder의 x에 접근 가능
+        return x + y
+    }
+};
+
+const add3 = makeAdder(3);
+console.log(add3(2)); // add3 함수가 생성된 이후에도 상위함수인 makeAdder의 x에 접근 가능
+// 이런 것들을 closure라고 함
+// 함수와 렉시컬 환경의 조합, 함수가 생성될 당시의 외부 변수를 기억하고 생성 이후에도 그 변수에 계속 접근이 가능한 기능
+// 외부 함수의 실행이 끝난 이후에도 내부함수가 외부함수의 변수에 접근할 수 있음
+const add10 = makeAdder(10);
+console.log(add10(5)); // 15
+console.log(add3(1)); // 4
+// 7.24 나머지 매개변수 // 전개구문 // 클로저 **********************************************************************
