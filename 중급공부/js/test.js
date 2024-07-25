@@ -960,27 +960,298 @@ Math.sqrt(16) // 4 // 4의제곱
 
 // 어휘적 환경(Lexical Environment)
 // 코드가 실행되면 스크립트 내에서 선언한 변수들이 Lexical Environment에 올라감
-let one; // 어휘적 환경으로 올라가지만 초기화 X // 그렇기 때문에 사용 불가 // let으로 선언한 변수도 hoisting됨
+// let one; // 어휘적 환경으로 올라가지만 초기화 X // 그렇기 때문에 사용 불가 // let으로 선언한 변수도 hoisting됨
 // 어휘적 환경에서 아직 할당이 안되었기 때문에 one은 undefined를 가짐 // 사용을 해도 에러는 나지 않음 값이 undefined기때문
-one = 1; // 숫자 1이 할당
-function addOne(num) { // 함수 선언문은 변수와 달리 바로 초기화 됨 // 그래서 해당 위치에서도 사용 가능
-    console.log(one + num);
-}
-addOne(5); // 마지막 라인에서 함수가 실행된다 그 순간 새로운 어휘적 환경이 만들어짐 num:5
+// one = 1; // 숫자 1이 할당
+// function addOne(num) { // 함수 선언문은 변수와 달리 바로 초기화 됨 // 그래서 해당 위치에서도 사용 가능
+//     console.log(one + num);
+// }
+// addOne(5); // 마지막 라인에서 함수가 실행된다 그 순간 새로운 어휘적 환경이 만들어짐 num:5
 // 함수가 넘겨받은 매개변수와 지역변수들이 존재함
 
-function makeAdder(x){
-    return function(y){ // y를 가지고 있고 상위함수인 makeAdder의 x에 접근 가능
-        return x + y
-    }
-};
+// function makeAdder(x){
+//     return function(y){ // y를 가지고 있고 상위함수인 makeAdder의 x에 접근 가능
+//         return x + y
+//     }
+// };
 
-const add3 = makeAdder(3);
-console.log(add3(2)); // add3 함수가 생성된 이후에도 상위함수인 makeAdder의 x에 접근 가능
+// const add3 = makeAdder(3);
+// console.log(add3(2)); // add3 함수가 생성된 이후에도 상위함수인 makeAdder의 x에 접근 가능
 // 이런 것들을 closure라고 함
 // 함수와 렉시컬 환경의 조합, 함수가 생성될 당시의 외부 변수를 기억하고 생성 이후에도 그 변수에 계속 접근이 가능한 기능
 // 외부 함수의 실행이 끝난 이후에도 내부함수가 외부함수의 변수에 접근할 수 있음
-const add10 = makeAdder(10);
-console.log(add10(5)); // 15
-console.log(add3(1)); // 4
+// const add10 = makeAdder(10);
+// console.log(add10(5)); // 15
+// console.log(add3(1)); // 4
 // 7.24 나머지 매개변수 // 전개구문 // 클로저 **********************************************************************
+
+// setTimeout : 일정 시간이 지난 후 함수를 실행
+// function fn(){
+//     console.log(3)
+// }
+// setTimeout(fn, 3000); // 해당 코드는 3초후에 로그를 찍어줌 // setTimeout은 2개의 매개변수를 받음
+// 하나는 일정시간이 지난뒤 실행되는 함수이고, 두번째는 시간을 의미
+// 해당 코드는
+// setTimeout(function(){
+//     console.log(3)
+// },3000); // 이렇게 쓸 수 있음
+
+// function showName(name){
+//     console.log(name);
+// }
+// const tId = setTimeout(showName, 3000, 'mike'); // 인수가 필요하면 뒤에 적을 수 있음 // 해당 인수인 mike는 함수의 첫번째 인수로 전달
+// clearTimeout(tId); // 예정된 작업을 없앰 // 3초가 지나기전에 해당 코드가 실행되므로 아무일도 일어나지 않음
+
+
+// setInterval : 일정 시간 간격으로 함수를 반복
+// function showName(name){
+//     console.log(name);
+// };
+// const tId = setInterval(showName, 3000, 'mike'); // 3초마다 mike가 찍힘
+// clearInterval(tId);
+
+// 주의사항 delay = 0? // 딜레이 시간이 0이어도 바로 실행되지 않음
+// setTimeout(function(){
+//     console.log(2)
+// }, 0);
+// console.log(1);
+// 현재 실행중인 스크립트가 종료된 이후 스케줄인 함수를 실행하기 때문 // 브라우저는 기본적으로 4ms~의 대기시간이 있음
+// 0이라고 적어도 4ms~ 혹은 그 이상이 걸릴 수도 있음
+
+// 예제 setInterval, clearInterval
+
+// let num = 0;
+// function showTime(){
+//     console.log(`안녕하세요. 접속하신지 ${num++}초가 지났습니다.`)
+//     if (num > 5) {
+//         clearInterval(tId)
+//     }
+// }
+// const tId = setInterval(showTime, 1000);
+
+// call, apply, bind : 함수 호출 방식과 관계없이 this를 지정할 수 있음
+
+// call : call 메서드는 모든 함수에서 사용할 수 있으며, this를 특정값으로 지정할 수 있습니다.
+// const mike = {
+//     name : 'mike',
+// };
+// const tom = {
+//     name : 'tom',
+// };
+// function showThisName(){
+//     console.log(this.name); // 여기서 this는 window를 가리키기 때문에 window.name은 "" 빈문자열을 나타냄
+// }
+// showThisName();
+// showThisName.call(mike); // 함수를 호출하면서 call을 사용하고 this로 사용할 객체를 넘기면 해당 함수가 주어진 객체의
+// // 메서드인 것 처럼 사용할 수 있음
+// showThisName.call(tom);
+
+// const mike = {
+//     name : 'mike',
+// };
+// const tom = {
+//     name : 'tom',
+// };
+// function showThisName(){
+//     console.log(this.name); // 여기서 this는 window를 가리키기 때문에 window.name은 "" 빈문자열을 나타냄
+// }
+// function update(birthday, occupation){ // update함수는 birthday와 occupation을 받아서
+//     this.birthday = birthday; // 해당 this의 객체의 정보를 새로운 데이터로 업데이트 해줌
+//     this.occupation = occupation;
+// }
+
+// update.call(mike, 1999, 'singer') // 첫번째 매개변수는 update함수에서 this로 사용됨
+// console.log(mike); // 두번째 매개변수 부터는 함수가 사용할 매개변수들을 순서대로 적은 것
+
+// update.call(tom, 2002, 'teacher')
+// console.log(tom);
+
+// apply : 함수 매개변수를 처리하는 방법을 제외하면 call과 완전히 같음
+// call은 일반적인 함수와 마찬가지로 매개변수를 직접 받지만, apply는 매개변수를 배열로 받음
+
+// update.apply(mike, [1999, 'singer']); // 매개변수를 배열로 넣어주면 call과 동일한 결과값이 나옴
+// console.log(mike);
+
+// update.apply(tom, [2002, 'teacher']);
+// console.log(tom);
+
+// apply는 배열요소를 함수 매개변수로 사용할 때 유용함 // 
+const nums = [3, 10, 1, 6, 4];
+const minNum = Math.min.apply(null, nums); // 어플라이는 매개변수로 배열로 전달하면 그 요소들을 차례대로 인수로 사용함
+// = Math.min.apply(null, [3, 10, 1, 6, 4]) 와 동일 //  앞에 null은 this로 사용된 값이고
+// min이나 max는 this가 필요하지 않아서 아무값이나 넣은 것
+const maxNum = Math.max.call(null, ...nums); // call은 차례대로 매개변수가 들어가야해서 spread연산자를 사용
+// = Math.max.call(null, 3,10,1,6,4); 와 동일 //
+// const minNum = Math.min(...nums); // spread 연산자를 활용
+// const maxNum = Math.max(...nums);
+
+console.log(minNum);
+console.log(maxNum);
+
+// bind // 함수의 this 값을 영구히 바꿀 수 있음
+
+// const mike = {
+//     name : 'mike'
+// };
+
+// function update(birthday, occupation){
+//     this.birthday = birthday;
+//     this.occupation = occupation;
+// };
+// const updateMike = update.bind(mike); // 이 bind는 새로 바인딩한 함수를 하나 만듦, 해당 함수는 항상 mike를 this로 받음
+// updateMike(1980, 'police');
+// console.log(mike);
+
+// const user = {
+//     name : 'mike',
+//     showName: function(){
+//         console.log(`hello, ${this.name}`);
+//     }
+// };
+// user.showName(); // hello,mike
+// let fn = user.showName;
+// // fn(); // 위에서 fn을 할당할 때 this를 잃어버림
+// fn.call(user); // hello,mike
+// fn.apply(user); // hello,mike
+
+// let boundFn = fn.bind(user);
+// boundFn(); // hello,mike
+
+// 상속, prototype
+
+// const user = {
+//     name : 'mike',
+// };
+// user.name // 'mike
+// user.hasOwnProperty('name') // true
+// user.hasOwnProperty('age') // false // 
+
+// console.log(user)
+
+const user = {
+    name : 'mike',
+    hasOwnProperty : function(){
+        console.log('haha')
+    }
+}
+user.hasOwnProperty(); // 객체에 해당 프로퍼티가 있으면 거기에서 탐색을 멈춤
+// 없을 때만 __prototype__에서 프로퍼티를 찾음
+
+// 해당 객체들의 공통된 부분을 해결하는 방법 // 상속
+// const car = {
+//     wheels : 4,
+//     drive() {
+//         console.log('drive..');
+//     },
+// };
+
+// const bmw = {
+//     color : 'red',
+//     navigation : 1,
+// };
+// const benz = {
+//     color : 'black',
+// };
+// const audi = {
+//     color : 'blue',
+// };
+
+// bmw.__proto__ = car;
+// benz.__proto__ = car;
+// audi.__proto__ = car;
+
+// console.log(bmw.color); // red
+// console.log(bmw.wheels); // undefined
+// console.log(bmw)
+
+// const x5 = {
+//     color : 'white',
+//     name : 'x5',
+// };
+// x5.__proto__ = bmw; // 상속은 계속 이어질 수 있음
+// x5.color // 'white'
+// x5.name // x5
+// x5.wheels // 4 // 상속받은 prototype을 계속 올라가 wheels를 찾음 이것을 Prototype Chain이라고 함
+
+// for..in을 통해 객체 프로퍼티를 순회
+// for(p in x5){
+//     console.log(p)
+// }
+// for(p in x5){
+//     if(x5.hasOwnProperty(p)){
+//         console.log('o', p);
+//     } else {
+//         console.log('x', p)
+//     }
+// } // for..in 문 안에서 구분하는 법
+// Object.keys(x5);
+// Object.values(x5); // keys나 values등 값과 관련된 객체 내장 메서드는 상속된 프로퍼티는 나오지 않음
+
+// const car = {
+//     wheels : 4,
+//     drive(){
+//         console.log('drive..')
+//     },
+// };
+
+// const Bmw = function (color) {
+//     this.color = color;
+// };
+
+// Bmw.prototype.wheels = 4; // 생성자 함수가 생성하는 객체에 __proto__를 해당 구문에 맞춰서 설정한다는 의미
+// Bmw.prototype.drive = function() {
+//     console.log('drive..');
+// };
+// Bmw.prototype.navigation = 1;
+// Bmw.prototype.stop = function() {
+//     console.log('stop');
+// }; // prototype을 이용하면 중복코드를 줄일 수 있음
+
+// Bmw.prototype = {
+//     constructor : Bmw, // 혹은 이렇게 수동으로 명시해둬도 괜찮음
+//     wheels : 4,
+//     drive() {
+//         console.log('drive..');
+//     },
+//     navigation : 1,
+//     stop() {
+//         console.log('stop!')
+//     },
+// } // 이렇게 해도 동일하지만 이렇게 하면 constructor가 사라짐 이런 상황을 방지하기 위해 프로토타입을 덮어쓰지말고
+// 하나씩 프로퍼티를 추가하는게 좋음
+
+// const x5 = new Bmw('red')
+// const z4 = new Bmw('blue')
+
+// x5.stop();
+// x5.__proto__ = car;
+// z4.__proto__ = car; // 하지만 생성자 함수를 사용하는 것이 간편하게 만드는 것인데 이렇게 일일이 __proto__를 하면 불편함
+
+// 생성자 함수가 새로운 객체를 만들어 낼 때 그 객체는 생성자의 instance라고 불림
+// 자바스크립트에는 이를 편리하게 확인할 수 있음 instanceof 연산자가 있음
+// 이를 이용해서 객체와 생성자를 비교할 수 있고,
+// 이는 해당 객체가 그 생성자로부터 생성된 것인지 판단해서 true 혹은 false로 반환
+
+// z4 // Bmw {color : 'blue'} // z4는 bmw로부터 생서되었기 때문에 z4는 bmw의 인스턴스임
+// z4 instanceof Bmw // true
+// z4.constructor === Bmw // 생성자로 만들어진 인스턴스객체에는 constructor라는 프로퍼티가 존재함
+// 이 constructor는 생성자 즉, Bmw를 가리킴
+
+// 자바스크립트는 명확한 constructor를 보장하지는 않음 개발자에 의해서 언제든지 수정가능
+
+// const Bmw = function (color) {
+//     this.color = color;
+// };
+// const x5 = new Bmw('red'); // 만들어진 자동차의 색상을 마음대로 변경할 수 있음
+// x5.color // 'red' 지만
+// x5.color = 'black'
+// x5.color // 'black' // 하지만 이렇게 바꾸면 안되기 때문에 클로저를 이용
+
+const Bmw = function(color) {
+    const c = color;
+    this.getColor = function() {
+        console.log(c);
+    };
+}; // 이런식으로 코드를 짜면 초기에 세팅했던 color값을 얻을 수만있고 바꿀 수는 없음
+
+// 7.25 setTimeout / setInterval / call,apply,bind / 상속 prototype *********************************************
