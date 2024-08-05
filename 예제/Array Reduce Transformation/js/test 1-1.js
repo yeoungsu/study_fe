@@ -1,4 +1,4 @@
-// 예제 배열의 각 요소에 변환 적용하여 새로운 배열 생성
+// Array Reduce Transformation
 
 // 문제  :
 // 코드
